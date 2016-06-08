@@ -2,13 +2,10 @@ package layers;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 
-import core.Window;
+import core.UI.UIButton;
 import core.UI.UIComponent;
-import core.UI.UIPanel;
 import events.Event;
 import events.EventDispatcher;
 import events.types.KeyPressedEvent;
@@ -18,16 +15,17 @@ import events.types.MousePressedEvent;
 import events.types.MouseReleasedEvent;
 import game.Game;
 
-public class MenuLayer extends Layer{
+public class MenuLayer extends UILayer{
 	
 	boolean paused;
 	boolean mainMenu = true;
 	
-	private UIPanel startButton;
+	private UIButton startButton;
 
 	public MenuLayer(Game game) {
 		super(game);
-		startButton = new UIPanel(game, Color.blue, new Rectangle(Window.width/2 - 150, Window.height/2 - 35, 300, 70));
+		startButton = new UIButton(this, Color.blue, "Start", new Rectangle(game.window.width/2 - 150, game.window.height/2 - 50, 300, 100) (Event e) -> ());
+		components.add(startButton);
 	}
 	
 	@Override
@@ -42,11 +40,12 @@ public class MenuLayer extends Layer{
 	
 	public boolean onMousePressed(MousePressedEvent e) {
 		mouseButtons[e.getButton()] = true;
-		if(paused){
-			return true;
-		} else {
-			return false;			
+		for(UIComponent c : components){
+			if(c.onMousePressed(e)){
+				return true;
+			}
 		}
+		return false;
 	}
 	public boolean onMouseReleased(MouseReleasedEvent e) {
 		mouseButtons[e.getButton()] = false;
@@ -60,13 +59,6 @@ public class MenuLayer extends Layer{
 	
 	public boolean onKeyPressed(KeyPressedEvent e) {
 		keys[e.getButton()] = true;
-		if(e.getButton() == KeyEvent.VK_ESCAPE) {
-			System.out.println("hello");
-			if(!mainMenu){
-				paused = !paused;
-				game.level.layer.setActive(!game.level.layer.active);				
-			}
-		}
 		return false;
 	}
 	
@@ -76,21 +68,14 @@ public class MenuLayer extends Layer{
 	}
 	
 	public void onRender(Graphics g) {
-		if(mainMenu){
-			startButton.onRender(g);
+		for(UIComponent c : components) {
+			c.onRender(g);
 		}
 	}
 	
 	public void onUpdate() {
-		if(mainMenu){
-			if(mouseButtons[1]){
-				if(startButton.box.contains(new Point(mouseX, mouseY))){
-					game.window.addLayer(new GameLayer(game));
-					this.gainFocus();
-					mainMenu = false;
-				}
-			}			
+		for(UIComponent c : components) {
+			c.onUpdate();
 		}
 	}
-
 }

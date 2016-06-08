@@ -2,30 +2,36 @@ package core.UI;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 
 import events.types.KeyPressedEvent;
 import events.types.KeyReleasedEvent;
 import events.types.MouseMovedEvent;
 import events.types.MousePressedEvent;
 import events.types.MouseReleasedEvent;
-import game.Game;
-import layers.Layer;
-import layers.LayerManager;
 import layers.UILayer;
 
-public class UIComponent {
+public class UIButton extends UIComponent{
 	
-	public Color color;
-	public UILayer layer;
-	
-	public UIComponent(UILayer layer, Color color){
-		this.color = color;
-		this.layer = layer;
+	public String text;
+	public Rectangle box;
+	private int padding = 10;
+
+	public UIButton(UILayer layer, Color color, String text, Rectangle box) {
+		super(layer, color);
+		this.text = text;
+		this.box = box;
 	}
 	
 	public boolean onMousePressed(MousePressedEvent e) {
-		
+		if(e.getButton() == MouseEvent.BUTTON1){
+			if(box.contains(new Point(e.getX(), e.getY()))){
+				onPress();
+				return true;
+			}
+		}
 		return false;
 	}
 	public boolean onMouseReleased(MouseReleasedEvent e) {
@@ -44,10 +50,17 @@ public class UIComponent {
 	}
 	
 	public void onRender(Graphics g) {
-		
+		g.setColor(color);
+		g.fillRect(box.x, box.y, box.width, box.height);
+		g.setColor(Color.white);
+		g.drawString(text, box.x + padding, box.y + padding);;
 	}
 	
-	public void onUpdate() {
+	public void setPadding(int padding) {
+		this.padding = padding;
+	}
+	
+	public void onPress() {
 		
 	}
 

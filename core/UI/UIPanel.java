@@ -5,13 +5,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import game.Game;
+import layers.Layer;
+import layers.UILayer;
 
 public class UIPanel extends UIComponent{
 	
 	public Rectangle box;
 
-	public UIPanel(Game game, Color color, Rectangle box) {
-		super(game, color);
+	public UIPanel(UILayer layer, Color color, Rectangle box) {
+		super(layer, color);
 		this.box = box;
 	}
 	
