@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
+import events.EventHandler;
 import events.types.KeyPressedEvent;
 import events.types.KeyReleasedEvent;
 import events.types.MouseMovedEvent;
@@ -19,7 +20,7 @@ public class UIButton extends UIComponent{
 	public Rectangle box;
 	private int padding = 10;
 
-	public UIButton(UILayer layer, Color color, String text, Rectangle box) {
+	public UIButton(UILayer layer, Color color, String text, Rectangle box, EventHandler event) {
 		super(layer, color);
 		this.text = text;
 		this.box = box;
