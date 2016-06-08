@@ -6,6 +6,7 @@ import java.util.List;
 
 import events.Event;
 import events.EventListener;
+import game.Game;
 import game.entity.Entity;
 
 public class Layer implements EventListener{
@@ -15,12 +16,20 @@ public class Layer implements EventListener{
 	public int mouseX;
 	public int mouseY;
 	public boolean isFocus;
+	public int layerIndex;
+	protected Game game;
+	
+	protected boolean active = true;
 	
 	protected boolean handleKeyPressed;
 	protected boolean handleKeyReleased;
 	protected boolean handleMouseClicked;
 	protected boolean handleMouseReleased;
 	protected boolean handleMouseMoved;
+	
+	public Layer(Game game){
+		this.game = game;
+	}
 
 	@Override
 	public void onEvent(Event event) {
@@ -48,6 +57,14 @@ public class Layer implements EventListener{
 	public void gainFocus(){
 		LayerManager.gainFocus(this);
 		isFocus = true;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 
 }

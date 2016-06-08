@@ -9,7 +9,7 @@ import events.Event;
 public class LayerManager {
 	
 	public static List<Layer> layerStack = new ArrayList<Layer>();
-	public static int score;
+	
 	
 	public static void gainFocus(Layer layer){
 		if(layerStack.get(layerStack.size() - 1).equals(layer)){
@@ -38,13 +38,16 @@ public class LayerManager {
 	
 	public static void onUpdate() {
 		for(int i = 0; i < layerStack.size(); i++){
-			layerStack.get(i).onUpdate();
+			if(layerStack.get(i).isActive()){
+				layerStack.get(i).onUpdate();				
+			}
 		}
 	}
 	
 	public static void AddLayer(Layer layer){
 		layerStack.add(layer);
 		layer.isFocus = true;
+		layer.layerIndex = layerStack.size() - 1;
 	}
 
 }

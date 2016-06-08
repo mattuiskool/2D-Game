@@ -4,24 +4,25 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import game.Game;
 import layers.LayerManager;
 
 public class UIComponent {
 	
-	public Rectangle box;
 	public Color color;
+	public Game game;
 	
-	public UIComponent(Rectangle box, Color color){
-		this.box = box;
+	public UIComponent(Game game, Color color){
 		this.color = color;
+		this.game = game;
 	}
 	
 	public void onRender(Graphics g) {
-		g.setColor(color);
-		g.fillRect(box.x, box.y, box.width, box.height);
 		
-		g.setColor(Color.BLACK);
-		g.drawString("Score: " + LayerManager.score, 5, 15 );
+	}
+	
+	public void onUpdate() {
+		
 	}
 
 }

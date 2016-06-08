@@ -22,7 +22,7 @@ public class Enemy extends Entity{
 	
 	public void kill(){
 		level.entities.remove(this);
-		LayerManager.score += 10;
+		level.score += 10;
 	}
 	
 	public void onUpdate() {

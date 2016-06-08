@@ -17,6 +17,7 @@ public class Level {
 	public Player player;
 	public int currentLevel;
 	public GameLayer layer;
+	public int score;
 	
 	private int time;
 	
