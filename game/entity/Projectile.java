@@ -49,9 +49,7 @@ public class Projectile extends Entity{
 		currentSize = size * (lifespan - time) / (double)lifespan;
 		box.width = (int) currentSize;
 		box.height = (int) currentSize;
-		if(box.x < 0 || box.x > Window.width || box.y < 0 || box.y > Window.height){
-			kill();
-		}
+
 	}
 	
 	public void onRender(Graphics g) {

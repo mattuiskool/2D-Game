@@ -26,9 +26,7 @@ public class LayerManager {
 	
 	public static void onEvent(Event event){
 		for(int i = layerStack.size() - 1; i >= 0 ; i--){
-			if(layerStack.get(i).isActive()){
-				layerStack.get(i).onEvent(event);				
-			}
+			layerStack.get(i).onEvent(event);				
 		}
 	}
 	

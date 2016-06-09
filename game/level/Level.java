@@ -1,6 +1,5 @@
 package game.level;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +7,8 @@ import java.util.List;
 import game.entity.BaseEnemy;
 import game.entity.Entity;
 import game.entity.Player;
+import game.entity.spawner.Spawner;
 import layers.GameLayer;
-import layers.LayerManager;
 
 public class Level {
 	
@@ -19,12 +18,11 @@ public class Level {
 	public GameLayer layer;
 	public int score;
 	
-	private int time;
-	
 	public Level(GameLayer layer) {
 		this.layer = layer;
 		this.player = new Player(this);
 		entities.add(player);
+		entities.add(new Spawner(this, new BaseEnemy(40, 40, this, player), 60));
 	}
 	
 	public void onRender(Graphics g) {
@@ -34,10 +32,6 @@ public class Level {
 	}
 	
 	public void onUpdate() {
-		time++;
-		if(time % 60 == 0){
-			this.spawn(new BaseEnemy(40, 40, this, player));
-		}
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			e.onUpdate();

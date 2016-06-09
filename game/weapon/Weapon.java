@@ -72,7 +72,7 @@ public class Weapon {
 	}
 	
 	protected Projectile newProjectile(double angle) {
-		return new Projectile(angle, speed, lifespan, damage, new Color(color), new Rectangle(holder.box.x, holder.box.y, size, size), holder.level, holder);
+		return new Projectile(angle, speed, lifespan, damage, new Color(color), new Rectangle(holder.box.x + holder.box.width/2, holder.box.y + holder.box.height/2, size, size), holder.level, holder);
 	}
 
 }

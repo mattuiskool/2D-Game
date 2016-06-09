@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,9 @@ public class GameLayer extends Layer{
 	
 	public boolean onKeyPressed(KeyPressedEvent e) {
 		keys[e.getButton()] = true;
+		if(keys[KeyEvent.VK_ESCAPE]){
+			this.setActive(!this.isActive());
+		}
 		return true;
 	}
 	
