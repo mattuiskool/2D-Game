@@ -2,45 +2,25 @@ package core.UI;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
-import events.types.KeyPressedEvent;
-import events.types.KeyReleasedEvent;
-import events.types.MouseMovedEvent;
-import events.types.MousePressedEvent;
-import events.types.MouseReleasedEvent;
-import game.Game;
-import layers.Layer;
-import layers.LayerManager;
+import events.Event;
 import layers.UILayer;
 
 public class UIComponent {
 	
 	public Color color;
 	public UILayer layer;
+	protected String name;
 	
-	public UIComponent(UILayer layer, Color color){
+	public UIComponent(String name, UILayer layer, Color color){
 		this.color = color;
 		this.layer = layer;
+		this.name = name;
+		layer.components.add(this);
 	}
 	
-	public boolean onMousePressed(MousePressedEvent e) {
+	public void onEvent(Event event) {
 		
-		return false;
-	}
-	public boolean onMouseReleased(MouseReleasedEvent e) {
-		return false;
-	}
-	public boolean onMouseMoved(MouseMovedEvent e) {
-		return false;
-	}
-	
-	public boolean onKeyPressed(KeyPressedEvent e) {
-		return false;
-	}
-	
-	public boolean onKeyReleased(KeyReleasedEvent e) {
-		return false;
 	}
 	
 	public void onRender(Graphics g) {
@@ -49,6 +29,10 @@ public class UIComponent {
 	
 	public void onUpdate() {
 		
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

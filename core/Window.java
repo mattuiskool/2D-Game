@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 
 import events.Event;
 import events.types.*;
-import layers.Layer;
+import layers.*;
 import layers.LayerManager;
 
 public class Window extends JFrame{
@@ -22,7 +22,6 @@ public class Window extends JFrame{
 	private Screen screen;
 	public static int width, height;
 	
-	private boolean running = false;
 	
 	public Window(String name, int width, int height) {
 		screen = new Screen(width, height);
@@ -86,7 +85,6 @@ public class Window extends JFrame{
 		});
 		screen.requestFocus();
 		
-		running = true;
 		screen.init();
 		time = System.nanoTime();
 		time2 = System.nanoTime();
@@ -131,6 +129,10 @@ public class Window extends JFrame{
 	
 	public void addLayer(Layer layer){
 		LayerManager.AddLayer(layer);
+	}
+	
+	public void removeLayer(Layer layer){
+		LayerManager.RemoveLayer(layer);
 	}
 
 }

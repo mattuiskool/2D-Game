@@ -6,12 +6,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
-import events.EventHandler;
-import events.types.KeyPressedEvent;
-import events.types.KeyReleasedEvent;
-import events.types.MouseMovedEvent;
+import events.Event;
+import events.EventDispatcher;
+import events.types.ButtonPressEvent;
 import events.types.MousePressedEvent;
-import events.types.MouseReleasedEvent;
 import layers.UILayer;
 
 public class UIButton extends UIComponent{
@@ -20,10 +18,15 @@ public class UIButton extends UIComponent{
 	public Rectangle box;
 	private int padding = 10;
 
-	public UIButton(UILayer layer, Color color, String text, Rectangle box, EventHandler event) {
-		super(layer, color);
+	public UIButton(String name, UILayer layer, Color color, String text, Rectangle box) {
+		super(name, layer, color);
 		this.text = text;
 		this.box = box;
+	}
+	
+	public void onEvent(Event event) {
+		EventDispatcher dispatcher = new EventDispatcher(event);
+		dispatcher.dispatch(Event.Type.MOUSE_PRESSED, (Event e) -> (onMousePressed((MousePressedEvent) e)));
 	}
 	
 	public boolean onMousePressed(MousePressedEvent e) {
@@ -33,20 +36,6 @@ public class UIButton extends UIComponent{
 				return true;
 			}
 		}
-		return false;
-	}
-	public boolean onMouseReleased(MouseReleasedEvent e) {
-		return false;
-	}
-	public boolean onMouseMoved(MouseMovedEvent e) {
-		return false;
-	}
-	
-	public boolean onKeyPressed(KeyPressedEvent e) {
-		return false;
-	}
-	
-	public boolean onKeyReleased(KeyReleasedEvent e) {
 		return false;
 	}
 	
@@ -62,7 +51,9 @@ public class UIButton extends UIComponent{
 	}
 	
 	public void onPress() {
-		
+		this.layer.game.window.onEvent(new ButtonPressEvent(this));
 	}
+	
+	
 
 }

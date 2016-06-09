@@ -9,7 +9,8 @@ public class Event {
 		KEY_PRESSED,
 		KEY_TYPED,
 		KEY_RELEASED,
-		WINDOW_LOST_FOCUS
+		WINDOW_LOST_FOCUS,
+		BUTTON_PRESSED
 	}
 	
 	private Type type;

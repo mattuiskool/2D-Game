@@ -17,7 +17,7 @@ public class Layer implements EventListener{
 	public int mouseY;
 	public boolean isFocus;
 	public int layerIndex;
-	protected Game game;
+	public Game game;
 	
 	protected boolean active = true;
 	

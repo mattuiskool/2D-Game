@@ -26,7 +26,9 @@ public class LayerManager {
 	
 	public static void onEvent(Event event){
 		for(int i = layerStack.size() - 1; i >= 0 ; i--){
-			layerStack.get(i).onEvent(event);
+			if(layerStack.get(i).isActive()){
+				layerStack.get(i).onEvent(event);				
+			}
 		}
 	}
 	
@@ -48,6 +50,10 @@ public class LayerManager {
 		layerStack.add(layer);
 		layer.isFocus = true;
 		layer.layerIndex = layerStack.size() - 1;
+	}
+	
+	public static void RemoveLayer(Layer layer){
+		layerStack.remove(layer.layerIndex);
 	}
 
 }
