@@ -19,7 +19,6 @@ import game.Game;
 
 public class MenuLayer extends UILayer{
 	
-	
 	private UIButton startButton;
 
 	public MenuLayer(Game game) {

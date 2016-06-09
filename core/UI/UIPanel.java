@@ -12,8 +12,8 @@ public class UIPanel extends UIComponent{
 	
 	public Rectangle box;
 
-	public UIPanel(UILayer layer, Color color, Rectangle box) {
-		super(layer, color);
+	public UIPanel(String name, UILayer layer, Color color, Rectangle box) {
+		super(name, layer, color);
 		this.box = box;
 	}
 	
