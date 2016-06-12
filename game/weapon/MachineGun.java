@@ -7,8 +7,8 @@ public class MachineGun extends Weapon{
 	public MachineGun(Entity holder) {
 		super(holder);
 		speed = 20;
-		damage = 5;
-		shotSpeed = 20;
+		damage = 100;
+		shotSpeed = 200;
 		lifespan = 60;
 	}
 

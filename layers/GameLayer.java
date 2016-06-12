@@ -58,6 +58,9 @@ public class GameLayer extends Layer{
 		if(keys[KeyEvent.VK_ESCAPE]){
 			this.setActive(!this.isActive());
 		}
+		if(keys[KeyEvent.VK_SPACE]){
+			game.level.startLevel(game.level.currentLevel + 1);
+		}
 		return true;
 	}
 	

@@ -84,7 +84,6 @@ public class MenuLayer extends UILayer{
 	
 	private void startGame() {
 		game.window.addLayer(new GameLayer(game));
-		this.setActive(false);
 		game.window.removeLayer(this);
 	}
 }

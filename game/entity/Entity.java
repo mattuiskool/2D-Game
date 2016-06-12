@@ -3,12 +3,9 @@ package game.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
-import events.types.KeyPressedEvent;
-import events.types.KeyReleasedEvent;
-import events.types.MouseMovedEvent;
-import events.types.MousePressedEvent;
-import events.types.MouseReleasedEvent;
+import game.entity.item.Item;
 import game.level.Level;
 import game.weapon.Weapon;
 
@@ -18,11 +15,11 @@ public class Entity {
 	public Color color;
 	public Level level;
 	protected Weapon weapon;
-	protected double speed;
-	public boolean vulnerable = true;
 	protected int vulnerableCount;
-	public boolean visible = true;
-	public int health = 100;
+	
+	public Stats stats;
+	
+	protected Random random;
 	
 	protected boolean stopped;
 	private int stopTimer;
@@ -31,13 +28,22 @@ public class Entity {
 		this.color = color;
 		this.box = box;
 		this.level = level;
+		random = new Random();
+		this.stats = new Stats();
 	}
 	
 	public void damage(int amount){
-		health -= amount;
-		if(health <= 0){
+		stats.health -= amount;
+		if(stats.health <= 0){
 			kill();
 		}
+		if(stats.health >= stats.maxHealth){
+			stats.health = stats.maxHealth;
+		}
+	}
+	
+	public void drop(Item item) {
+		level.spawn(item);
 	}
 	
 	public void isTouching(Entity e) {
@@ -48,7 +54,17 @@ public class Entity {
 	}
 	
 	public void onUpdate() {
-		
+		if(!stats.vulnerable){
+			vulnerableCount++;
+			if(vulnerableCount %10 == 0){
+				stats.visible = !stats.visible;
+			}
+		}
+		if(vulnerableCount >= 90){
+			stats.vulnerable = true;
+			vulnerableCount = 0;
+			stats.visible = true;
+		}
 	}
 	
 	public void kill(){
@@ -63,21 +79,9 @@ public class Entity {
 			stopTimer --;
 		}
 		g.setColor(color);
-		if(!vulnerable){
-			vulnerableCount++;
-			if(vulnerableCount %10 == 0){
-				visible = !visible;
-			}
-		}
-		if(vulnerableCount >= 60){
-			vulnerable = true;
-			vulnerableCount = 0;
-			visible = true;
-		}
-		if(visible){
-			g.fillRect(box.x, box.y, box.width, box.height);			
-		}
-		g.drawString("Health: " + health, box.x, box.y - 10);
+		
+		g.fillRect(box.x, box.y, box.width, box.height);			
+		g.drawString("Health: " + stats.health, box.x, box.y - 10);
 	}
 	
 	public void spawn(Entity e){

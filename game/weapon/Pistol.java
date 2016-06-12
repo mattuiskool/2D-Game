@@ -7,9 +7,9 @@ public class Pistol extends Weapon{
 	public Pistol(Entity holder) {
 		super(holder);
 		speed = 12;
-		shotSpeed = 1.5f;
+		shotSpeed = 0.5f;
 		lifespan = 80;
-		damage = 25;
+		damage = 5;
 		size = 6;
 	}
 

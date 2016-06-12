@@ -100,6 +100,7 @@ public class Window extends JFrame{
 		long dif = (now - time);
 		long dif2 = (now - time2);
 		if(dif2 >= 1000000000){
+			System.out.println(frames);
 			frames = 0;
 			time2 = now;
 		}

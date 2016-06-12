@@ -11,7 +11,7 @@ public class Shotgun extends Weapon{
 	public Shotgun(Entity holder) {
 		super(holder);
 		speed = 30;
-		shotSpeed = 0.6f;
+		shotSpeed = 2f;
 		lifespan = 20;
 		damage = 100;
 		size = 7;
@@ -19,9 +19,13 @@ public class Shotgun extends Weapon{
 	
 	public void shoot(double angle) {
 		holder.spawn(newProjectile(angle + 10));
+		holder.spawn(newProjectile(angle + 7.5));
 		holder.spawn(newProjectile(angle + 5));
+		holder.spawn(newProjectile(angle + 2.5));
 		holder.spawn(newProjectile(angle));
+		holder.spawn(newProjectile(angle - 2.5));
 		holder.spawn(newProjectile(angle - 5));
+		holder.spawn(newProjectile(angle - 7.5));
 		holder.spawn(newProjectile(angle - 10));
 	}
 	

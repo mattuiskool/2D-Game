@@ -9,34 +9,23 @@ import game.level.Level;
 
 public class Spawner extends Entity{
 	
-	public Entity type;
-	public int spawnTime;
+	public int spawnTime = 60;
 	public int spawned;
+	public int maxSpawns;
+	protected int health;
 	
-	private int tick;
+	protected int tick;
 	
-	public Spawner(Level level, Entity type, int spawnTime) {
-		super(null, new Rectangle(type.box.x, type.box.y, 0, 0), level);
-		this.type = type;
+	public Spawner(Level level, int maxSpawns, int health, int x, int y) {
+		super(null, new Rectangle(x, y, 0, 0), level);
 		this.spawnTime = spawnTime;
+		this.maxSpawns = maxSpawns;
+		this.health = health;
 	}
 	
-	public void onUpdate() {
-		tick++;
-		if(tick >= spawnTime){
-			BaseEnemy e = new BaseEnemy(box.x, box.y, level, level.player);
-			level.spawn(e);
-			spawned++;
-			tick = 0;
-		}
-		if(spawned >= 10){
-			this.kill();
-		}
-	}
-	
-	public void kill() {
-		super.kill();
-		System.out.println("Killed");
+	public Spawner setSpawnTime(int spawnTime) {
+		this.spawnTime = spawnTime;
+		return this;
 	}
 	
 	public void onRender(Graphics g) {

@@ -1,0 +1,33 @@
+TODO:
+- GUI
+	- Message boxes
+	- display stats
+- Re-do bullet/player stats
+	- player bullet stats
+	- stats are per-Entity
+	- Weapons take stats from holder.
+- Re-do level stuff (as in level 1, 2, etc)
+	- re-do spawners
+	- allow for set levels (E.g. boss levels) as well as generated levels (normal levels that naturally increase in difficulty)
+	- allow for 'key-frames' (E.g. set key-frames for enemy health, etc, and each level will slowly transition into the next keyframe)
+- Add items
+	- weapon items
+	- stat upgrades
+	- pickups
+	- unlocks
+- Enemies
+	- archer enemy
+	- bosses
+	- enemy drops.
+- Component based architecture (as opposed to current inheritance based architecture)
+- Eventually do music
+	- OpenAL?
+-Eventually redo graphics
+	- OpenGL
+		- Fonts
+	- Textures
+	- Art
+Ideas:
+- Upgrade store?
+	- uses points from killing enemies
+-

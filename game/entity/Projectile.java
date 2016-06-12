@@ -17,7 +17,6 @@ public class Projectile extends Entity{
 	private double currentSize;
 	private int time;
 	
-	
 	public int damage = 100;
 	
 	public Entity owner;
@@ -31,6 +30,19 @@ public class Projectile extends Entity{
 		y = box.y;
 		this.damage = damage;
 		this.size = box.width;
+		this.owner = owner;
+	}
+	
+	public void isTouching(Entity e){
+		if(Enemy.class.isAssignableFrom(e.getClass())){
+			if(this.damage > e.stats.health){
+				damage -= e.stats.health;
+				e.kill();
+			} else {
+				e.damage(damage);
+				this.kill();
+			}
+		}
 	}
 	
 	public void onUpdate() {
@@ -49,7 +61,6 @@ public class Projectile extends Entity{
 		currentSize = size * (lifespan - time) / (double)lifespan;
 		box.width = (int) currentSize;
 		box.height = (int) currentSize;
-
 	}
 	
 	public void onRender(Graphics g) {

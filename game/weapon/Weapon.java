@@ -52,6 +52,7 @@ public class Weapon {
 	}
 	
 	public void update(double dir, boolean shooting) {
+		
 		if(shooting){
 			if(!shot){
 				shoot(dir);
