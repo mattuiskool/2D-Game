@@ -10,6 +10,7 @@ import java.util.List;
 
 import events.Event;
 import events.EventDispatcher;
+import events.types.ButtonPressEvent;
 import events.types.KeyPressedEvent;
 import events.types.KeyReleasedEvent;
 import events.types.MouseMovedEvent;
@@ -37,8 +38,16 @@ public class GameLayer extends Layer{
 		dispatcher.dispatch(Event.Type.MOUSE_MOVED, (Event e) -> (onMouseMoved((MouseMovedEvent) e)));
 		dispatcher.dispatch(Event.Type.KEY_PRESSED, (Event e) -> (onKeyPressed((KeyPressedEvent) e)));
 		dispatcher.dispatch(Event.Type.KEY_RELEASED, (Event e) -> (onKeyReleased((KeyReleasedEvent) e)));
+		dispatcher.dispatch(Event.Type.BUTTON_PRESSED, (Event e) -> (onButtonPress((ButtonPressEvent) e)));
 	}
 	
+	private boolean onButtonPress(ButtonPressEvent e) {
+		if(e.button.getName() == "Resume") {
+			this.setActive(!this.isActive());
+		}
+		return false;
+	}
+
 	public boolean onMousePressed(MousePressedEvent e) {
 		mouseButtons[e.getButton()] = true;
 		return false;
@@ -55,9 +64,7 @@ public class GameLayer extends Layer{
 	
 	public boolean onKeyPressed(KeyPressedEvent e) {
 		keys[e.getButton()] = true;
-		if(keys[KeyEvent.VK_ESCAPE]){
-			this.setActive(!this.isActive());
-		}
+		
 		if(keys[KeyEvent.VK_SPACE]){
 			game.level.startLevel(game.level.currentLevel + 1);
 		}
@@ -66,6 +73,9 @@ public class GameLayer extends Layer{
 	
 	public boolean onKeyReleased(KeyReleasedEvent e) {
 		keys[e.getButton()] = false;
+		if(e.getButton() == KeyEvent.VK_ESCAPE){
+			this.setActive(!this.isActive());
+		}
 		return true;
 	}
 	

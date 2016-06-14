@@ -16,7 +16,6 @@ public class UIComponent {
 		this.color = color;
 		this.layer = layer;
 		this.name = name;
-		layer.components.add(this);
 	}
 	
 	public void onEvent(Event event) {

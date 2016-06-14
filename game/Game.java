@@ -2,7 +2,7 @@ package game;
 
 import core.Window;
 import game.level.Level;
-import layers.MenuLayer;
+import layers.UILayer;
 
 public class Game {
 	
@@ -11,7 +11,7 @@ public class Game {
 	
 	public Game() {
 		window = new Window("Game", 1600, 900);
-		window.addLayer(new MenuLayer(this));
+		window.addLayer(new UILayer(this));
 	}
 
 }
