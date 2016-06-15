@@ -19,10 +19,9 @@ public class MainMenu extends Menu {
 
 	public MainMenu(UILayer layer) {
 		super(layer);
-		startButton = new UIButton("StartButton", layer, Color.blue, "Start",
+		startButton = new UIButton("StartButton", this, Color.blue, "Start",
 				new Rectangle(Window.width / 2 - 150, Window.height / 2 - 50, 300, 100));
 		startButton.setPadding(50);
-		components.add(startButton);
 	}
 
 	public void onEvent(Event event) {

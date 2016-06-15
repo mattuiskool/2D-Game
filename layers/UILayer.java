@@ -17,17 +17,21 @@ import game.Game;
 import layers.ui.MainMenu;
 import layers.ui.Menu;
 import layers.ui.PauseMenu;
+import layers.ui.gui.Stats;
 
 public class UILayer extends Layer{
 	
 	private MainMenu mainMenu;
 	private PauseMenu pauseMenu;
+	private Stats statScreen;
 	public List<Menu> menus = new ArrayList<Menu>();
 
 	public UILayer(Game game) {
 		super(game);
 		mainMenu = new MainMenu(this);
 		pauseMenu = new PauseMenu(this);
+		statScreen = new Stats(this);
+		statScreen.active = false;
 		
 	}
 	
@@ -97,6 +101,7 @@ public class UILayer extends Layer{
 	
 	public void startGame() {
 		game.window.addLayer(new GameLayer(game));
+		statScreen.active = true;
 		this.gainFocus();
 	}
 }

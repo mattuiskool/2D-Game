@@ -23,7 +23,7 @@ public class PauseMenu extends Menu{
 
 	public PauseMenu(UILayer layer) {
 		super(layer);
-		resumeButton = new UIButton("Resume", layer, Color.blue, "Resume", new Rectangle(Window.width/2 - 150, Window.height/2 - 50, 300, 100));
+		resumeButton = new UIButton("Resume", this, Color.blue, "Resume", new Rectangle(Window.width/2 - 150, Window.height/2 - 50, 300, 100));
 		resumeButton.setPadding(50);
 		components.add(resumeButton);
 		active = false;

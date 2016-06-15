@@ -10,7 +10,7 @@ import events.Event;
 import events.EventDispatcher;
 import events.types.ButtonPressEvent;
 import events.types.MousePressedEvent;
-import layers.UILayer;
+import layers.ui.Menu;
 
 public class UIButton extends UIComponent {
 
@@ -18,8 +18,8 @@ public class UIButton extends UIComponent {
 	public Rectangle box;
 	private int padding = 10;
 
-	public UIButton(String name, UILayer layer, Color color, String text, Rectangle box) {
-		super(name, layer, color);
+	public UIButton(String name, Menu menu, Color color, String text, Rectangle box) {
+		super(name, menu, color);
 		this.text = text;
 		this.box = box;
 	}
@@ -52,7 +52,7 @@ public class UIButton extends UIComponent {
 	}
 
 	public void onPress() {
-		this.layer.game.window.onEvent(new ButtonPressEvent(this));
+		this.menu.layer.game.window.onEvent(new ButtonPressEvent(this));
 	}
 
 }

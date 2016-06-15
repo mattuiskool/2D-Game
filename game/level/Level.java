@@ -4,12 +4,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.entity.BaseEnemy;
 import game.entity.Enemy;
 import game.entity.Entity;
 import game.entity.Player;
 import game.entity.spawner.BaseEnemySpawner;
-import game.entity.spawner.Spawner;
 import layers.GameLayer;
 
 public class Level {
@@ -19,14 +17,13 @@ public class Level {
 	public Player player;
 	public int currentLevel;
 	public GameLayer layer;
-	public int score;
 	public int killed;
+	
 	
 	public Level(GameLayer layer) {
 		this.layer = layer;
 		this.player = new Player(this);
 		entities.add(player);
-		//entities.add(new BaseEnemy(0, 0, this, player, 50));
 		startLevel(1);
 	}
 	
