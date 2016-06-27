@@ -21,7 +21,6 @@ import game.entity.Enemy;
 import game.entity.Entity;
 import game.entity.Player;
 import game.entity.Projectile;
-import game.level.Level;
 import layers.Layer;
 
 public class GameLayer extends Layer{
@@ -31,7 +30,6 @@ public class GameLayer extends Layer{
 	
 	public GameLayer(Game game) {
 		super(game);
-		game.level = new Level(this);
 	}
 	
 	public void onEvent(Event event) {
@@ -45,9 +43,6 @@ public class GameLayer extends Layer{
 	}
 	
 	private boolean onButtonPress(ButtonPressEvent e) {
-		if(e.button.getName() == "Resume") {
-			this.setActive(!this.isActive());
-		}
 		return false;
 	}
 
@@ -67,28 +62,12 @@ public class GameLayer extends Layer{
 	
 	public boolean onKeyPressed(KeyPressedEvent e) {
 		keys[e.getButton()] = true;
-		
-		if(keys[KeyEvent.VK_SPACE]){
-			game.level.startLevel(game.level.currentLevel + 1);
-		}
 		return true;
 	}
 	
 	public boolean onKeyReleased(KeyReleasedEvent e) {
 		keys[e.getButton()] = false;
-		if(e.getButton() == KeyEvent.VK_ESCAPE){
-			this.setActive(!this.isActive());
-		}
 		return true;
-	}
-	
-	public void onRender(Graphics g) {
-		game.level.onRender(g);
-	}
-	
-	public void onUpdate() {
-		game.level.onUpdate();
-		game.level.onInput();
 	}
 
 }

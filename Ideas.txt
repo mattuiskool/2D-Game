@@ -26,6 +26,9 @@ TODO:
 - Enemies
 	- AI
 		- flocking AI
+			- Agent - a single entity
+			- flock, a group of agents that will interact with each other.
+				- handles all agents in a flock
 		- Archer AI
 	- archer enemy
 	- bosses
@@ -34,6 +37,8 @@ TODO:
 		- loot
 	- enemy drops.
 - Component based architecture (as opposed to current inheritance based architecture)
+	- spawners handle their own entities
+	- 
 - Eventually do music
 	- OpenAL?
 -Eventually redo graphics
@@ -45,5 +50,5 @@ TODO:
 	- easy, medium, hard
 Ideas:
 - Upgrade store?
-	- uses points from killing enemies
+	- uses coins from killing enemies
 -

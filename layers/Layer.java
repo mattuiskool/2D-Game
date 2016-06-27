@@ -33,14 +33,6 @@ public class Layer implements EventListener{
 
 	@Override
 	public void onEvent(Event event) {
-	}
-	
-	
-	public void onUpdate() {
-		
-	}
-	
-	public void onRender(Graphics g) {
 		
 	}
 	
