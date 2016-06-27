@@ -93,7 +93,7 @@ public class Window extends JFrame{
 	
 	private long time;
 	private long time2;
-	private int frames;
+	public int frames;
 	
 	private void run(){
 		long now = System.nanoTime();

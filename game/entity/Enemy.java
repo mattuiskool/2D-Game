@@ -46,6 +46,7 @@ public class Enemy extends Entity{
 	}
 	
 	public void isTouching(Entity e){
+		System.out.println("touching");
 		if(Projectile.class.isAssignableFrom(e.getClass())){
 			Projectile p = (Projectile) e;
 			if(p.owner.getClass().equals(Player.class)){

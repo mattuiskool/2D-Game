@@ -26,6 +26,9 @@ import layers.Layer;
 
 public class GameLayer extends Layer{
 	
+	public int width = 1500;
+	public int height = 900;
+	
 	public GameLayer(Game game) {
 		super(game);
 		game.level = new Level(this);
