@@ -12,18 +12,27 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import events.Event;
-import events.types.*;
-import layers.*;
+import events.types.KeyPressedEvent;
+import events.types.KeyReleasedEvent;
+import events.types.KeyTypedEvent;
+import events.types.MouseMovedEvent;
+import events.types.MousePressedEvent;
+import events.types.MouseReleasedEvent;
+import game.Game;
+import layers.Layer;
 import layers.LayerManager;
 
 public class Window extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private Screen screen;
+	private Game game;
+	
 	public static int width, height;
 	
 	
-	public Window(String name, int width, int height) {
+	public Window(String name, int width, int height, Game game) {
+		this.game = game;
 		screen = new Screen(width, height);
 		this.width = width;
 		this.height = height;
@@ -121,11 +130,11 @@ public class Window extends JFrame{
 	}
 	
 	private void onRender(Graphics g){
-		LayerManager.onRender(g);
+		game.render(g);
 	}
 	
 	private void onUpdate() {
-		LayerManager.onUpdate();
+		game.update();
 	}
 	
 	public void addLayer(Layer layer){

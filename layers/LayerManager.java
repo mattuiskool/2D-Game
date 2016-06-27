@@ -30,20 +30,6 @@ public class LayerManager {
 		}
 	}
 	
-	public static void onRender(Graphics g){
-		for(int i = 0; i < layerStack.size(); i++){
-			layerStack.get(i).onRender(g);
-		}
-	}
-	
-	public static void onUpdate() {
-		for(int i = 0; i < layerStack.size(); i++){
-			if(layerStack.get(i).isActive()){
-				layerStack.get(i).onUpdate();				
-			}
-		}
-	}
-	
 	public static void AddLayer(Layer layer){
 		layerStack.add(layer);
 		layer.isFocus = true;

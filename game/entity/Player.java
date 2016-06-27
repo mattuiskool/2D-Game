@@ -51,6 +51,7 @@ public class Player extends Entity{
 
 	public void onUpdate(){
 		super.onUpdate();
+		checkCollisions();
 		int x = getMouseX() - box.x;
 		int y = getMouseY() - box.y;
 		double dir = 90 - Math.toDegrees(Math.atan2(x, y));

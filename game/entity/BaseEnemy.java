@@ -15,6 +15,7 @@ public class BaseEnemy extends Enemy{
 	
 	public void onUpdate() {
 		super.onUpdate();
+		checkCollisions();
 	}
 	
 	public void isTouching(Entity e){

@@ -50,6 +50,15 @@ public class Entity {
 		
 	}
 	
+	public void checkCollisions() {
+		for(int i = 0; i < this.level.entities.size(); i++) {
+			Entity e = level.entities.get(i);
+			if(e.box.intersects(box)){
+				isTouching(e);
+			}
+		}
+	}
+	
 	public void onInput(){
 	}
 	

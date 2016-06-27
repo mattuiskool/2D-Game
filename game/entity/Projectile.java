@@ -46,6 +46,7 @@ public class Projectile extends Entity{
 	}
 	
 	public void onUpdate() {
+		checkCollisions();
 		time++;
 		double xa = speed * Math.cos(Math.toRadians(direction));
 		double ya = speed * Math.sin(Math.toRadians(direction));
