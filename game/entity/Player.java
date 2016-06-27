@@ -11,6 +11,8 @@ import game.weapon.MachineGun;
 import game.weapon.Shotgun;
 
 public class Player extends Entity{
+	
+	public int coins;
 
 	public Player(Level level) {
 		super(Color.red, new Rectangle(Window.width/2 - 10, Window.height/2 - 10, 20, 20), level);

@@ -4,16 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import game.Game;
-import layers.Layer;
-import layers.UILayer;
+import layers.ui.Menu;
 
 public class UIPanel extends UIComponent{
 	
 	public Rectangle box;
 
-	public UIPanel(String name, UILayer layer, Color color, Rectangle box) {
-		super(name, layer, color);
+	public UIPanel(String name, Menu menu, Color color, Rectangle box) {
+		super(name, menu, color);
 		this.box = box;
 	}
 	

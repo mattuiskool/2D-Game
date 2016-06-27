@@ -1,17 +1,18 @@
 package core.UI;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
-import layers.UILayer;
+import layers.ui.Menu;
 
 public class UITextField extends UIComponent{
 	
 	private String text;
 	private int x, y;
 
-	public UITextField(String name, UILayer layer, Color color, String text, int x, int y) {
-		super(name, layer, color);
+	public UITextField(String name, String text, Menu menu, Color color, int x, int y) {
+		super(name, menu, color);
 		this.text = text;
 		this.x = x;
 		this.y = y;
@@ -19,6 +20,7 @@ public class UITextField extends UIComponent{
 	
 	public void onRender(Graphics g) {
 		g.setColor(color);
+		g.setFont(new Font("SansSerif", Font.PLAIN, 24));
 		g.drawString(text, x, y);
 	}
 	

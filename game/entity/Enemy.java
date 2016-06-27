@@ -23,7 +23,7 @@ public class Enemy extends Entity{
 	
 	public void kill(){
 		level.entities.remove(this);
-		level.score += 10;
+		level.player.coins += 10;
 		level.killed++;
 	}
 	
