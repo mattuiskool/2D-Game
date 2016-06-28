@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.util.Vector;
+import game.ai.FlockAgentComponent;
 import game.gamecomponent.GameComponent;
 import layers.Layer;
 
@@ -15,7 +16,9 @@ public class GameObject {
 	public List<GameComponent> components = new ArrayList<GameComponent>();
 	public List<GameObject> children = new ArrayList<GameObject>();
 	public Layer layer;
-	protected Vector position = new Vector();
+	private Vector position = new Vector();
+	private Vector velocity = new Vector();
+	private double speed = 1;
 	private int width = 20, height = 20;
 	protected Color color = Color.black;
 
@@ -118,5 +121,24 @@ public class GameObject {
 	
 	public Vector getPosition() {
 		return position;
+	}
+	
+	public GameObject setVelocity(Vector v) {
+		this.velocity = v;
+		
+		return this;
+	}
+	
+	public Vector getVelocity() {
+		return velocity;
+	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public GameObject setSpeed(double speed) {
+		this.speed = speed;
+		return this;
 	}
 }
