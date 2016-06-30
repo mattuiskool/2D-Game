@@ -22,11 +22,10 @@ public class FlockAgentComponent extends GameComponent{
 		Vector cohesion = calcCohesion();
 		Vector separation = calcSeparation();
 		Vector alignment = calcAlignment();
-		Vector targetV = calcTarget(flock.target);
+		Vector attraction = calcAttraction(flock.target);
 		
-		
-		parent.getVelocity().x += separation.x * flock.separationWeight + cohesion.x * flock.cohesionWeight + alignment.x * flock.alignmentWeight + targetV.x * flock.targetWeight;
-		parent.getVelocity().y += separation.y * flock.separationWeight + cohesion.y * flock.cohesionWeight + alignment.y * flock.alignmentWeight + targetV.y * flock.targetWeight;
+		parent.getVelocity().x += separation.x * flock.separationWeight + cohesion.x * flock.cohesionWeight + alignment.x * flock.alignmentWeight + attraction.x * flock.attractionWeight;
+		parent.getVelocity().y += separation.y * flock.separationWeight + cohesion.y * flock.cohesionWeight + alignment.y * flock.alignmentWeight + attraction.y * flock.attractionWeight;
 		
 		parent.setVelocity(parent.getVelocity().normalise());
 		
@@ -34,10 +33,15 @@ public class FlockAgentComponent extends GameComponent{
 		parent.changeY(parent.getVelocity().y * parent.getSpeed());
 	}
 	
-	private Vector calcTarget(GameObject target) {
+	private Vector calcAttraction(GameObject target) {
 		Vector result = new Vector();
 		result.x = target.getX() - parent.getX();
 		result.y = target.getY() - parent.getY();
+		double scale = result.getLengthSquared() / flock.neighbourDistance;
+		
+		result.x /= scale;
+		result.y /= scale;
+		
 		return result.normalise();
 	}
 	

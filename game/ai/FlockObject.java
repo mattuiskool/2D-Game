@@ -13,10 +13,10 @@ public class FlockObject extends GameObject{
 	public double separationWeight = 2;
 	public double cohesionWeight = 1;
 	public double alignmentWeight = 1;
-	public double targetWeight = 0.2;
+	public double attractionWeight = 0.2;
 	
 	public int separationDistance = 500;
-	public int neighbourDistance = 20000;
+	public int neighbourDistance = 5000;
 	
 	public GameObject target;
 	
