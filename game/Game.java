@@ -18,28 +18,34 @@ public class Game {
 	
 	private GameLayer gameLayer;
 	
+	private FlockObject flock;
+	
 	public Game() {
 		master = new GameObject(null);
 		window = new Window("Game", 1600, 900, this);
 		gameLayer = new GameLayer(this);
 		window.addLayer(gameLayer);
-		GameObject player = new PlayerObject(gameLayer).setX(100).setY(100).setSpeed(2);
+		GameObject player = new PlayerObject(gameLayer).setX(100).setY(100).setSpeed(5);
 		master.addChild(player);
-		FlockObject flock = new FlockObject(gameLayer, player);
+		flock = new FlockObject(gameLayer, player);
 		
 		for(int i = 0; i < 12; i++){
 			for(int j = 0; j < 12; j++){
-				flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(500 + i*4, 500 + j*60)).setSpeed(2).setVelocity(new Vector(1, 0)));
-				flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(500 + i*60, 500 + j*40)).setSpeed(2).setVelocity(new Vector(0, 1)).setColor(Color.red));
+				flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(i * 40, j*40)).setSpeed(2));
 			}
 		}
 		master.addChild(flock);
 		
 	}
 	
+	int time;
+	
 	public void update() {
 		master.onUpdate();
-		
+		time++;
+		if(time %5 == 0) {
+			flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(40, 40)).setSpeed(2));
+		}
 	}
 	
 	public void render(Graphics g) {

@@ -19,7 +19,7 @@ public class PlayerObject extends GameObject{
 		renderer = new RenderComponent();
 		label = new LabelComponent();
 		health = new HealthComponent().setHealth(100);
-		movement = new MovementComponent().setSpeed(2);
+		movement = new MovementComponent();
 		addComponent(renderer);
 		addComponent(label);
 		addComponent(health);

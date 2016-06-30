@@ -2,31 +2,20 @@ package game.gamecomponent;
 
 public class MovementComponent extends GameComponent{
 	
-	private int speed;
-	
-	public MovementComponent setSpeed(int speed) {
-		this.speed = speed;
-		return this;
-	}
-	
-	public int getSpeed() {
-		return speed;
-	}
-	
 	public void moveLeft() {
-		this.parent.changeX(-speed);
+		this.parent.changeX(-this.parent.getSpeed());
 	}
 	
 	public void moveRight() {
-		this.parent.changeX(speed);
+		this.parent.changeX(this.parent.getSpeed());
 	}
 	
 	public void moveUp() {
-		this.parent.changeY(-speed);
+		this.parent.changeY(-this.parent.getSpeed());
 	}
 	
 	public void moveDown() {
-		this.parent.changeY(speed);
+		this.parent.changeY(this.parent.getSpeed());
 	}
 
 }
