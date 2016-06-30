@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.util.Vector;
-import game.ai.FlockAgentComponent;
 import game.gamecomponent.GameComponent;
 import layers.Layer;
 

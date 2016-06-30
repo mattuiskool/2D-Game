@@ -10,10 +10,10 @@ import layers.Layer;
 
 public class FlockObject extends GameObject{
 		
-	public double separationWeight = 2;
+	public double separationWeight = 1;
 	public double cohesionWeight = 1;
 	public double alignmentWeight = 1;
-	public double targetWeight = 0.2;
+	public double targetWeight = 1;
 	
 	public int separationDistance = 500;
 	public int neighbourDistance = 20000;

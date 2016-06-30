@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import core.Window;
@@ -28,7 +29,8 @@ public class Game {
 		
 		for(int i = 0; i < 12; i++){
 			for(int j = 0; j < 12; j++){
-				flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(i * 40, j*40)).setSpeed(1));
+				flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(500 + i*4, 500 + j*60)).setSpeed(2).setVelocity(new Vector(1, 0)));
+				flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(500 + i*60, 500 + j*40)).setSpeed(2).setVelocity(new Vector(0, 1)).setColor(Color.red));
 			}
 		}
 		master.addChild(flock);
@@ -37,6 +39,7 @@ public class Game {
 	
 	public void update() {
 		master.onUpdate();
+		
 	}
 	
 	public void render(Graphics g) {

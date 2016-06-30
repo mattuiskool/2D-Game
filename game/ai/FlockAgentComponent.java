@@ -2,6 +2,7 @@ package game.ai;
 
 import java.awt.Color;
 
+import core.Window;
 import core.util.Vector;
 import game.gamecomponent.GameComponent;
 import game.gameobject.GameObject;
@@ -18,6 +19,16 @@ public class FlockAgentComponent extends GameComponent{
 	
 	public void onUpdate() {
 		super.onUpdate();
+		if(parent.getX() < 0) {
+			parent.setX(Window.width);
+		} else if(parent.getX() > Window.width){
+			parent.setX(0);
+		}
+		if(parent.getY() < 0) {
+			parent.setY(Window.height);
+		} else if(parent.getY() > Window.height){
+			parent.setY(0);
+		}
 		
 		Vector cohesion = calcCohesion();
 		Vector separation = calcSeparation();
@@ -25,8 +36,10 @@ public class FlockAgentComponent extends GameComponent{
 		Vector targetV = calcTarget(flock.target);
 		
 		
-		parent.getVelocity().x += separation.x * flock.separationWeight + cohesion.x * flock.cohesionWeight + alignment.x * flock.alignmentWeight + targetV.x * flock.targetWeight;
-		parent.getVelocity().y += separation.y * flock.separationWeight + cohesion.y * flock.cohesionWeight + alignment.y * flock.alignmentWeight + targetV.y * flock.targetWeight;
+		parent.getVelocity().x += separation.x + cohesion.x + alignment.x;
+		parent.getVelocity().y += separation.y + cohesion.y + alignment.y;
+		//parent.getVelocity().x += separation.x * flock.separationWeight + cohesion.x * flock.cohesionWeight;// + alignment.x * flock.alignmentWeight;// + targetV.x * flock.targetWeight;
+		//parent.getVelocity().y += separation.y * flock.separationWeight + cohesion.y * flock.cohesionWeight;// + alignment.y * flock.alignmentWeight ;//+ targetV.y * flock.targetWeight;
 		
 		parent.setVelocity(parent.getVelocity().normalise());
 		
@@ -103,9 +116,9 @@ public class FlockAgentComponent extends GameComponent{
 			scale = 1-scale;
 			result.x *= -1;
 			result.y *= -1;	
+			result = result.normalise();
 			result.x *= 2*scale;
 			result.y *= 2*scale;
-			result = result.normalise();
 			return result;
 		} else {
 			return new Vector();
