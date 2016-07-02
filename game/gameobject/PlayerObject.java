@@ -3,6 +3,7 @@ package game.gameobject;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import core.util.Vector;
 import game.gamecomponent.*;
 import layers.Layer;
 
@@ -45,10 +46,9 @@ public class PlayerObject extends GameObject{
 		
 		double angle = 0;
 		if(layer.mouseButtons[1]){
-			double x = layer.mouseX - getX();
-			double y = layer.mouseY - getY();
-			angle = 90 - Math.toDegrees(Math.atan2(x, y));
-			this.addChild(new ProjectileObject(layer, angle).setX(getX()).setY(getY()));
+			Vector d = layer.mousePosition.subtract(getPosition());
+			angle = 90 - Math.toDegrees(Math.atan2(d.x, d.y));
+			this.addChild(new ProjectileObject(layer, angle).setX(getX()).setY(getY()).setSpeed(15));
 		}
 	}
 	

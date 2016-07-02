@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 import core.Window;
 import core.util.Vector;
@@ -20,7 +21,10 @@ public class Game {
 	
 	private FlockObject flock;
 	
+	private Random random;
+	
 	public Game() {
+		random = new Random();
 		master = new GameObject(null);
 		window = new Window("Game", 1600, 900, this);
 		gameLayer = new GameLayer(this);
@@ -28,12 +32,6 @@ public class Game {
 		GameObject player = new PlayerObject(gameLayer).setX(100).setY(100).setSpeed(5);
 		master.addChild(player);
 		flock = new FlockObject(gameLayer, player);
-		
-		for(int i = 0; i < 12; i++){
-			for(int j = 0; j < 12; j++){
-				flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(i * 40, j*40)).setSpeed(2));
-			}
-		}
 		master.addChild(flock);
 		
 	}
@@ -44,7 +42,7 @@ public class Game {
 		master.onUpdate();
 		time++;
 		if(time %5 == 0) {
-			flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(40, 40)).setSpeed(2));
+			flock.addChild(new GameObject(gameLayer).addComponent(new FlockAgentComponent(flock)).addComponent(new RenderComponent()).setPosition(new Vector(random.nextInt(Window.width), random.nextInt(Window.height))).setSpeed(1).setColor(new Color(random.nextInt())));
 		}
 	}
 	

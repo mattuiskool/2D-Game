@@ -33,6 +33,9 @@ public class GameObject {
 		for(GameComponent c : components) {
 			c.onUpdate();
 		}
+		
+		position.x += velocity.x;
+		position.y += velocity.y;
 	}
 	
 	public void onRender(Graphics g) {
@@ -139,5 +142,9 @@ public class GameObject {
 	public GameObject setSpeed(double speed) {
 		this.speed = speed;
 		return this;
+	}
+	
+	public void kill() {
+		this.parent.children.remove(this);
 	}
 }

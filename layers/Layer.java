@@ -1,20 +1,15 @@
 package layers;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
-
+import core.util.Vector;
 import events.Event;
 import events.EventListener;
 import game.Game;
-import game.entity.Entity;
 
 public class Layer implements EventListener{
 	
 	public boolean[] keys = new boolean[1000];
 	public boolean[] mouseButtons = new boolean[10];
-	public int mouseX;
-	public int mouseY;
+	public Vector mousePosition = new Vector();
 	public boolean isFocus;
 	public int layerIndex;
 	public Game game;

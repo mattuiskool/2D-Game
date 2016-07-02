@@ -36,27 +36,29 @@ public class FlockAgentComponent extends GameComponent{
 		Vector attraction = calcAttraction(flock.target);
 		
 		
-		parent.getVelocity().x += separation.x + cohesion.x + alignment.x;
-		parent.getVelocity().y += separation.y + cohesion.y + alignment.y;
-		//parent.getVelocity().x += separation.x * flock.separationWeight + cohesion.x * flock.cohesionWeight;// + alignment.x * flock.alignmentWeight;// + targetV.x * flock.targetWeight;
-		//parent.getVelocity().y += separation.y * flock.separationWeight + cohesion.y * flock.cohesionWeight;// + alignment.y * flock.alignmentWeight ;//+ targetV.y * flock.targetWeight;
+		parent.getVelocity().x += separation.x + cohesion.x + alignment.x + attraction.x;
+		parent.getVelocity().y += separation.y + cohesion.y + alignment.y + attraction.y;
 		
-		parent.setVelocity(parent.getVelocity().normalise());
+		parent.getVelocity().x *= parent.getSpeed();
+		parent.getVelocity().y *= parent.getSpeed();
 		
-		parent.changeX(parent.getVelocity().x * parent.getSpeed());
-		parent.changeY(parent.getVelocity().y * parent.getSpeed());
+		parent.setVelocity(parent.getVelocity().normalise());;
 	}
 	
 	private Vector calcAttraction(GameObject target) {
 		Vector result = new Vector();
 		result.x = target.getX() - parent.getX();
 		result.y = target.getY() - parent.getY();
-		double scale = result.getLengthSquared() / flock.neighbourDistance;
+		double scale = result.getLengthSquared() / (flock.neighbourDistance*6);
+		if(parent.getPosition().subtract(target.getPosition()).getLengthSquared() < flock.neighbourDistance){
+			result.x *= 1-scale;
+			result.y *= 1-scale;			
+		} else {
+		}
+		result = result.normalise();
 		
-		result.x /= scale;
-		result.y /= scale;
 		
-		return result.normalise();
+		return result;
 	}
 	
 	private Vector calcAlignment() {
@@ -95,8 +97,7 @@ public class FlockAgentComponent extends GameComponent{
 			result.y -= parent.getY();
 			return result.normalise();
 		} else {
-			System.out.println("hello");
-			return new Vector();
+			return new Vector().normalise();
 		}
 	}
 	
@@ -121,9 +122,8 @@ public class FlockAgentComponent extends GameComponent{
 			scale = 1-scale;
 			result.x *= -1;
 			result.y *= -1;	
-			result = result.normalise();
-			result.x *= 2*scale;
-			result.y *= 2*scale;
+			result.x *= scale;
+			result.y *= scale;
 			return result;
 		} else {
 			return new Vector();

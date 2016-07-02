@@ -55,8 +55,8 @@ public class GameLayer extends Layer{
 		return false;
 	}
 	public boolean onMouseMoved(MouseMovedEvent e) {
-		mouseX = e.getX();
-		mouseY = e.getY();
+		mousePosition.x = e.getX();
+		mousePosition.y = e.getY();
 		return false;
 	}
 	

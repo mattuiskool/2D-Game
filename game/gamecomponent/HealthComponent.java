@@ -15,6 +15,9 @@ public class HealthComponent extends GameComponent{
 	
 	public void damage(int amount) {
 		health -= amount;
+		if(health <= 0){
+			parent.kill();
+		}
 	}
 
 }
