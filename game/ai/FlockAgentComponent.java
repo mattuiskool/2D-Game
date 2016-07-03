@@ -1,12 +1,10 @@
 package game.ai;
 
-import java.awt.Color;
+import java.awt.Graphics;
 
-import core.Window;
 import core.util.Vector;
 import game.gamecomponent.GameComponent;
 import game.gameobject.GameObject;
-import layers.Layer;
 
 public class FlockAgentComponent extends GameComponent{
 	
@@ -19,30 +17,19 @@ public class FlockAgentComponent extends GameComponent{
 	
 	public void onUpdate() {
 		super.onUpdate();
-		if(parent.getX() < 0) {
-			parent.setX(Window.width);
-		} else if(parent.getX() > Window.width){
-			parent.setX(0);
-		}
-		if(parent.getY() < 0) {
-			parent.setY(Window.height);
-		} else if(parent.getY() > Window.height){
-			parent.setY(0);
-		}
 		
-		Vector cohesion = calcCohesion();
-		Vector separation = calcSeparation();
-		Vector alignment = calcAlignment();
+		
+		Vector flocking = calcFlocking();
 		Vector attraction = calcAttraction(flock.target);
 		
 		
-		parent.getVelocity().x += separation.x + cohesion.x + alignment.x + attraction.x;
-		parent.getVelocity().y += separation.y + cohesion.y + alignment.y + attraction.y;
+		parent.getVelocity().x += flocking.x + attraction.x;// + attraction.x;
+		parent.getVelocity().y += flocking.y + attraction.y;// + attraction.y;
 		
-		parent.getVelocity().x *= parent.getSpeed();
-		parent.getVelocity().y *= parent.getSpeed();
 		
 		parent.setVelocity(parent.getVelocity().normalise());;
+		parent.getVelocity().x *= parent.getSpeed();
+		parent.getVelocity().y *= parent.getSpeed();
 	}
 	
 	private Vector calcAttraction(GameObject target) {
@@ -61,73 +48,77 @@ public class FlockAgentComponent extends GameComponent{
 		return result;
 	}
 	
-	private Vector calcAlignment() {
+	private Vector calcFlocking() {
+		Vector alignmentResult = new Vector();
+		Vector cohesionResult = new Vector();
+		Vector separationResult = new Vector();
 		Vector result = new Vector();
 		int neighbours = 0;
-		for(FlockAgentComponent o : flock.agents) {
-			if(!o.equals(this) && parent.getPosition().subtract(o.parent.getPosition()).getLengthSquared() < flock.neighbourDistance){
-				result.x += o.parent.getVelocity().x;
-				result.y += o.parent.getVelocity().y;
-				neighbours++;
-			}
-		}
-		if(neighbours > 0) {
-			result.x /= neighbours;
-			result.y /= neighbours;
-			return result.normalise();			
-		} else {
-			return new Vector();
-		}
-	}
-	
-	private Vector calcCohesion() {
-		Vector result = new Vector();
-		int neighbours = 0;
-		for(FlockAgentComponent o : flock.agents) {
-			if(!o.equals(this) && parent.getPosition().subtract(o.parent.getPosition()).getLengthSquared() < flock.neighbourDistance){
-				result.x += o.parent.getX();
-				result.y += o.parent.getY();
-				neighbours++;
-			}
-		}
-		if(neighbours > 0){
-			result.x /= neighbours;
-			result.y /= neighbours;
-			result.x -= parent.getX();
-			result.y -= parent.getY();
-			return result.normalise();
-		} else {
-			return new Vector().normalise();
-		}
-	}
-	
-	private Vector calcSeparation() {
-		Vector result = new Vector();
-		int neighbours = 0;
+		int closeNeighbours = 0;
 		
 		double dSquared = 0;
 		double scale = 0;
-		for(FlockAgentComponent o : flock.agents) {
-			if(!o.equals(this) && parent.getPosition().subtract(o.parent.getPosition()).getLengthSquared() < flock.separationDistance){
-				result.x += o.parent.getX() - parent.getX();
-				result.y += o.parent.getY() - parent.getY();
+		
+		for(FlockAgentComponent o : flock.agents){
+			if(!o.equals(this) && parent.getPosition().subtract(o.parent.getPosition()).getLengthSquared() < flock.neighbourDistance){
 				neighbours++;
+				
+				//cohesion
+				cohesionResult.x += o.parent.getX();
+				cohesionResult.y += o.parent.getY();
+				
+				//alignment
+				alignmentResult.x += o.parent.getVelocity().x;
+				alignmentResult.y += o.parent.getVelocity().y;
+			}
+			//separation
+			if(!o.equals(this) && parent.getPosition().subtract(o.parent.getPosition()).getLengthSquared() < flock.separationDistance){
+				separationResult.x += o.parent.getX() - parent.getX();
+				separationResult.y += o.parent.getY() - parent.getY();
+				closeNeighbours++;
 			}
 		}
-		if(neighbours > 0){
-			result.x /= neighbours;
-			result.y /= neighbours;
-			dSquared = result.getLengthSquared();
+		
+		if(neighbours > 0) {
+			//cohesion
+			cohesionResult.x /= neighbours;
+			cohesionResult.y /= neighbours;
+			cohesionResult.x -= parent.getX();
+			cohesionResult.y -= parent.getY();
+			cohesionResult = cohesionResult.normalise();
+			
+			//alignment
+			alignmentResult.x /= neighbours;
+			alignmentResult.y /= neighbours;
+			alignmentResult = alignmentResult.normalise();
+		} else {
+			cohesionResult = new Vector();
+			alignmentResult = new Vector();
+		}
+		
+		//separation
+		if(closeNeighbours > 0){
+			separationResult.x /= closeNeighbours;
+			separationResult.y /= closeNeighbours;
+			dSquared = separationResult.getLengthSquared();
 			scale = Math.sqrt(dSquared)/Math.sqrt(flock.separationDistance);
 			scale = 1-scale;
-			result.x *= -1;
-			result.y *= -1;	
-			result.x *= scale;
-			result.y *= scale;
-			return result;
+			separationResult.x *= -1;
+			separationResult.y *= -1;	
+			separationResult.x *= scale;
+			separationResult.y *= scale;
 		} else {
-			return new Vector();
+			separationResult = new Vector();
 		}
+		
+		result.x = separationResult.x + cohesionResult.x + alignmentResult.x;
+		result.y = separationResult.y + cohesionResult.y + alignmentResult.y;
+		return result;
+	}
+	
+	public void kill() {
+		super.kill();
+		flock.agents.remove(this);
 	}
 	
 }

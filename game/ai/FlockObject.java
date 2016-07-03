@@ -30,16 +30,8 @@ public class FlockObject extends GameObject{
 	
 	public void onUpdate() {
 		super.onUpdate();
-		for(GameObject o : children) {
-			o.onUpdate();
-		}
 	}
 	
-	public void onRender(Graphics g) {
-		super.onRender(g);
-		for(GameObject o : children) {
-			o.onRender(g);
-		}
-	}
+	
 
 }

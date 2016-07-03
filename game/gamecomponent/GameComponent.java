@@ -20,5 +20,9 @@ public class GameComponent {
 	public void onRender(Graphics g) {
 		
 	}
+	
+	public void kill() {
+		parent.components.remove(this);
+	}
 
 }

@@ -11,7 +11,6 @@ public class PlayerObject extends GameObject{
 	
 	private GameComponent renderer;
 	private LabelComponent label;
-	private HealthComponent health;
 	private MovementComponent movement;
 	
 
@@ -19,14 +18,14 @@ public class PlayerObject extends GameObject{
 		super(layer);
 		renderer = new RenderComponent();
 		label = new LabelComponent();
-		health = new HealthComponent().setHealth(100);
 		movement = new MovementComponent();
 		addComponent(renderer);
 		addComponent(label);
-		addComponent(health);
 		addComponent(movement);
 		this.setColor(Color.blue);
 	}
+	
+	int time;
 	
 	public void onUpdate() {
 		super.onUpdate();
@@ -42,13 +41,19 @@ public class PlayerObject extends GameObject{
 		if(layer.keys[KeyEvent.VK_D]){
 			movement.moveRight();
 		}
-		label.setString("Health: " + health.getHealth());
+		label.setString("Health: " + getHealth());
+		
+		time++;
 		
 		double angle = 0;
-		if(layer.mouseButtons[1]){
+		if(layer.mouseButtons[1] && time%5 == 0){
 			Vector d = layer.mousePosition.subtract(getPosition());
 			angle = 90 - Math.toDegrees(Math.atan2(d.x, d.y));
+			//this.addChild(new ProjectileObject(layer, angle+10).setX(getX()).setY(getY()).setSpeed(15));
+		//	this.addChild(new ProjectileObject(layer, angle+5).setX(getX()).setY(getY()).setSpeed(15));
 			this.addChild(new ProjectileObject(layer, angle).setX(getX()).setY(getY()).setSpeed(15));
+			//this.addChild(new ProjectileObject(layer, angle-5).setX(getX()).setY(getY()).setSpeed(15));
+			//this.addChild(new ProjectileObject(layer, angle-10).setX(getX()).setY(getY()).setSpeed(15));
 		}
 	}
 	

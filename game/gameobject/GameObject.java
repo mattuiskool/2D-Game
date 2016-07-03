@@ -2,9 +2,11 @@ package game.gameobject;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Window;
 import core.util.Vector;
 import game.gamecomponent.GameComponent;
 import layers.Layer;
@@ -17,18 +19,21 @@ public class GameObject {
 	public Layer layer;
 	private Vector position = new Vector();
 	private Vector velocity = new Vector();
-	private double speed = 1;
+	private Rectangle box;
+	private double speed;
 	private int width = 20, height = 20;
 	protected Color color = Color.black;
+	private int health = 20;
 
 
 	public GameObject(Layer layer) {
 		this.layer = layer;
+		box = new Rectangle(0, 0, width, height);
 	}
 	
 	public void onUpdate() {
-		for(GameObject o : children) {
-			o.onUpdate();
+		for(int i = 0; i < children.size(); i++) {
+			children.get(i).onUpdate();
 		}
 		for(GameComponent c : components) {
 			c.onUpdate();
@@ -36,6 +41,19 @@ public class GameObject {
 		
 		position.x += velocity.x;
 		position.y += velocity.y;
+		box.x = (int) position.x;
+		box.y = (int) position.y;
+		
+		if(getX() < 0) {
+			setX(Window.width);
+		} else if(getX() > Window.width){
+			setX(0);
+		}
+		if(getY() < 0) {
+			setY(Window.height);
+		} else if(getY() > Window.height){
+			setY(0);
+		}
 	}
 	
 	public void onRender(Graphics g) {
@@ -57,8 +75,7 @@ public class GameObject {
 	}
 	
 	public GameObject addComponent(GameComponent c) {
-		components.add(c);
-		c.setParent(this);
+		components.add(c.setParent(this));
 		return this;
 	}
 
@@ -94,6 +111,7 @@ public class GameObject {
 	
 	public GameObject setWidth(int width) {
 		this.width = width;
+		box.width = width;
 		return this;
 	}
 	
@@ -103,6 +121,7 @@ public class GameObject {
 	
 	public GameObject setHeight(int height) {
 		this.height = height;
+		box.height = height;
 		return this;
 	}
 	
@@ -145,6 +164,37 @@ public class GameObject {
 	}
 	
 	public void kill() {
+		for(int i = 0; i < components.size(); i++){
+			components.get(i).kill();
+		}
+		for(int i = 0; i < children.size(); i++){
+			children.get(i).kill();
+		}
 		this.parent.children.remove(this);
+	}
+
+	public Rectangle getBox() {
+		return box;
+	}
+
+	public GameObject setBox(Rectangle box) {
+		this.box = box;
+		return this;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public GameObject setHealth(int health) {
+		this.health = health;
+		return this;
+	}
+	
+	public void damage(int amount) {
+		health -= amount;
+		if(health <= 0){
+			kill();
+		}
 	}
 }
